@@ -10,12 +10,12 @@ package modelo;
  * @author USUARIO
  */
 public class Acceso {
-    public String autentificar(String username, String password){
-        String respuesta;
+    public Boolean autentificar(String username, String password){
+        Boolean respuesta;
         if(username.equals("PROFESOR")&& password.equals("TRENTINO")){
-            respuesta = "Bienvenido";
+            respuesta = true;
         }else{
-            respuesta = "Usuario incorrecto";
+            respuesta = false;
         }
         return respuesta;
         

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Acceso;
 
 /**
@@ -34,19 +35,33 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String usuario = request.getParameter("username");
         String password = request.getParameter("password");
+        String destino = "login.jsp";
         
+        if(usuario.isEmpty() || password.isEmpty()){
+            destino = "index.html";
+        }
+    
         Acceso miAcceso = new Acceso();
-        String respuesta = miAcceso.autentificar(usuario, password);
-        
+        Boolean respuesta = miAcceso.autentificar(usuario, password);
         request.setAttribute("respuesta", respuesta);
+        HttpSession session = request.getSession(true);
         
-        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+       if(respuesta){
+          session.setAttribute("username", usuario);
+          destino = "login.jsp";
+       }else{
+           session.invalidate();
+           destino = "index.html";
+       }
+      
+        
+        RequestDispatcher rd = request.getRequestDispatcher(destino);
         rd.forward(request, response);
         
         
         
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -84,6 +99,5 @@ public class LoginServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

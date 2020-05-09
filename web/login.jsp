@@ -3,8 +3,10 @@
     Created on : 26/04/2020, 05:01:07 PM
     Author     : USUARIO
 --%>
+
 <%
-    String respuesta = (String)request.getAttribute("respuesta");
+    Boolean respuesta = (Boolean)request.getAttribute("respuesta");
+    String username = (String)session.getAttribute("username");
     %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,5 +18,7 @@
     <body>
         <h1>Login</h1>
         <%=respuesta%>
+        <br>
+        <%=username%>
     </body>
 </html>
